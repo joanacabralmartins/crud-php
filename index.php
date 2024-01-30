@@ -21,7 +21,7 @@
                 <div class="mt-2">
                     <label for="nome">Nome</label>
                     <input type="text" id="nome">
-                    <button class="btn btn-success" onclick="adicionarPessoa()">Incluir</button>
+                    <button id="btnIncluir" class="btn btn-success">Incluir</button>
                 </div>
 
                 <div class="mt-4">
@@ -29,7 +29,7 @@
                         <div class="col-md-12">
                             <table class="table table-bordered">
                                 <thead>
-                                    <th>Pessoas</th>
+                                    Pessoas
                                 </thead>
                                 <tbody id="tbody">
                                 </tbody>
@@ -55,7 +55,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
 </body>
 

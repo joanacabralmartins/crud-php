@@ -1,5 +1,7 @@
 let pessoas = [];
 
+const botaoIncluir = document.getElementById("btnIncluir");
+
 function adicionarPessoa() {
     const nomeInput = document.getElementById('nome');
     const nome = nomeInput.value.trim();
@@ -18,14 +20,38 @@ function adicionarPessoa() {
 
 function atualizarTabelaPessoas() {
     const tbody = document.getElementById('tbody');
-    tbody.innerHTML = ''; 
+    tbody.innerHTML = '';
 
     pessoas.forEach((pessoa, index) => {
-        const row = `<tr>
-                <td>${pessoa.nome}
-                <button class="btn btn-info" onclick="adicionarFilho(${index})">Adicionar Filho</button>
+        let row = `
+            <tr>
+                <td>${pessoa.nome}</td>
+                <td>
+                    <button class="btn btn-danger" onclick="removerPessoa(${index})">Remover Pessoa</button>
                 </td>
             </tr>`;
+
+        if (pessoa.filhos.length > 0) {
+            pessoa.filhos.forEach(filho => {
+                const filhoRow = `
+                    <tr>
+                        <td>${filho}</td>
+                        <td>
+                            <button class="btn btn-danger" onclick="removerFilho(${index}, '${filho}')">Remover Filho</button>
+                        </td>
+                    </tr>`;
+                row += filhoRow;
+            });
+        }
+    
+        const adicionarFilho = `
+            <tr>
+                <td colspan="2">
+                    <button class="btn btn-secondary" onclick="adicionarFilho(${index})">Adicionar Filho</button>
+                </td>
+            </tr>`;
+        
+        row += adicionarFilho;
         tbody.innerHTML += row;
     });
 }
@@ -44,6 +70,24 @@ function adicionarFilho(index) {
     if (nomeFilho !== '' && pessoaSelecionada) {
         pessoaSelecionada.filhos.push(nomeFilho);
 
+        atualizarTabelaPessoas();
+        atualizarDadosJSON();
+    }
+}
+
+function removerPessoa(index) {
+    pessoas.splice(index, 1);
+    atualizarTabelaPessoas();
+    atualizarDadosJSON();  
+}
+
+function removerFilho(pessoaIndex, filhoNome) {
+    const pessoaSelecionada = pessoas[pessoaIndex];
+    const filhoIndex = pessoaSelecionada.filhos.indexOf(filhoNome);
+
+    if (filhoIndex !== -1) {
+        pessoaSelecionada.filhos.splice(filhoIndex, 1);
+        atualizarTabelaPessoas();
         atualizarDadosJSON();
     }
 }
@@ -66,3 +110,7 @@ $(document).ready(function () {
         });
     });
 });
+
+botaoIncluir.addEventListener('click', () => {
+    adicionarPessoa();
+})
