@@ -15,8 +15,8 @@
     <div class="container mt-5">
         <div class="row mb-4">
             <div class="col-md-6">
-                <button class="btn btn-primary mr-2">Gravar</button>
-                <button class="btn btn-secondary">Ler</button>
+                <button id="btnGravar" class="btn btn-primary mr-2">Gravar</button>
+                <button id="btnLer" class="btn btn-secondary">Ler</button>
 
                 <div class="mt-2">
                     <label for="nome">Nome</label>
@@ -55,7 +55,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="js/script.js"></script>
 </body>
 

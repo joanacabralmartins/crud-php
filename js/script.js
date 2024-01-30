@@ -47,3 +47,23 @@ function adicionarFilho(index) {
         atualizarDadosJSON();
     }
 }
+
+$(document).ready(function () {
+    $('#btnGravar').on('click', function () {
+        const jsonData = JSON.stringify({ pessoas: pessoas });
+        console.log(jsonData); // Adicione esta linha para imprimir no console
+        $.ajax({
+            url: 'app/controller/Controller.php',
+            method: 'POST',
+            data: jsonData,
+            contentType: 'application/json', // Adicione esta linha para indicar o tipo de conteúdo
+            dataType: 'json',
+            success: function (result) {
+                alert('Dados gravados com sucesso!');
+            },
+            error: function () {
+                alert('Erro ao gravar os dados.');
+            }
+        });
+    });
+});

@@ -4,5 +4,7 @@ namespace app\model;
 
 class Pessoa
 {
-    public $id, $nome;
+    public $id;
+    
+    public $nome;
 }
