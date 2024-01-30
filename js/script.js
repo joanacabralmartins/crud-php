@@ -51,6 +51,7 @@ function adicionarFilho(index) {
 $(document).ready(function () {
     $('#btnGravar').on('click', function () {
         const jsonData = JSON.stringify({ pessoas: pessoas });
+        console.log(jsonData);
         $.ajax({
             url: 'app/controller/Controller.php',
             method: 'POST',
