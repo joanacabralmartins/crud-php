@@ -62,4 +62,19 @@ class Pessoa
             return [];
         }
     }
+
+    public function limparTabela()
+    {
+        try {
+            $pdo = Connection::connection();
+            $pdo->exec('DELETE FROM pessoa');
+
+            $pdo->exec('ALTER TABLE pessoa AUTO_INCREMENT = 1');
+
+            return true;
+        } catch (\PDOException $e) {
+            echo 'Erro' . $e->getMessage();
+            return false;
+        }
+    }
 }

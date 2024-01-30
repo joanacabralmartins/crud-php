@@ -15,7 +15,7 @@
     <div class="container mt-5">
         <div class="row mb-4">
             <div class="col-md-6">
-                <button id="btnGravar" class="btn btn-primary mr-2">Gravar</button>
+                <button id="btnGravar" class="btn btn-secondary mr-2">Gravar</button>
                 <button id="btnLer" class="btn btn-secondary">Ler</button>
 
                 <div class="mt-2">

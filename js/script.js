@@ -1,23 +1,6 @@
 let pessoas = [];
 
 const botaoIncluir = document.getElementById("btnIncluir");
-const botaoLer = document.getElementById("btnLer");
-
-function adicionarPessoa() {
-    const nomeInput = document.getElementById('nome');
-    const nome = nomeInput.value.trim();
-
-    if (nome !== '') {
-        const pessoa = { nome: nome, filhos: [] };
-
-        pessoas.push(pessoa);
-
-        atualizarTabelaPessoas();
-        atualizarDadosJSON();
-
-        nomeInput.value = '';
-    }
-}
 
 function atualizarTabelaPessoas() {
     const tbody = document.getElementById('tbody');
@@ -62,6 +45,22 @@ function atualizarDadosJSON() {
     const jsonObj = { pessoas };
     
     jsonOutput.textContent = JSON.stringify(jsonObj, null, 2);
+}
+
+function adicionarPessoa() {
+    const nomeInput = document.getElementById('nome');
+    const nome = nomeInput.value.trim();
+
+    if (nome !== '') {
+        const pessoa = { nome: nome, filhos: [] };
+
+        pessoas.push(pessoa);
+
+        atualizarTabelaPessoas();
+        atualizarDadosJSON();
+
+        nomeInput.value = '';
+    }
 }
 
 function adicionarFilho(index) {
@@ -111,33 +110,29 @@ $(document).ready(function () {
             }
         });
     });
-});
 
-function lerDados() {
-    $.ajax({
-        url: 'app/controller/Controller.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function (result) {
-            pessoas = [];
-
-            if (result.pessoas) {
-                pessoas = result.pessoas;
+    $('#btnLer').on('click', function () {
+        $.ajax({
+            url: 'app/controller/Controller.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (result) {
+                pessoas = [];
+    
+                if (result.pessoas) {
+                    pessoas = result.pessoas;
+                }
+    
+                atualizarTabelaPessoas();
+                atualizarDadosJSON();
+            },
+            error: function () {
+                alert('Erro ao ler os dados.');
             }
-
-            atualizarTabelaPessoas();
-            atualizarDadosJSON();
-        },
-        error: function () {
-            alert('Erro ao ler os dados.');
-        }
+        });
     });
-}
+});
 
 botaoIncluir.addEventListener('click', () => {
     adicionarPessoa();
-})
-
-botaoLer.addEventListener('click', () => {
-    lerDados();
 })

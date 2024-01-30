@@ -13,16 +13,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode($json_data, true);
 
     if (isset($data['pessoas']) && is_array($data['pessoas'])) {
+        $pessoa = new Pessoa();
+        $filho = new Filho();
+
+        $pessoa->limparTabela();
+        $filho->limparTabela();
+        
         foreach ($data['pessoas'] as $pessoa_data) {
-            $pessoa = new Pessoa();
             $pessoa->setNome($pessoa_data['nome']);
 
             if ($pessoa->gravar()) {
                 if (isset($pessoa_data['filhos'])) {
                     foreach ($pessoa_data['filhos'] as $filho_data) {
-                        $filho = new Filho();
                         $filho->setNome($filho_data);
                         $filho->setIdPessoa($pessoa->getId()); 
+
                         $filho->gravar();
                     }
                 }
@@ -42,8 +47,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($pessoas_array as $pessoa) {
         $pessoa_data = [
             'nome' => $pessoa['nome'],
+            'filhos' => [],
         ];
-
+    
+        $filho = new Filho();
+        $filhos_array = $filho->lerPorPessoaId($pessoa['id']); 
+    
+        foreach ($filhos_array as $filho) {
+            $pessoa_data['filhos'][] = $filho['nome'];
+        }
+    
         $data['pessoas'][] = $pessoa_data;
     }
 
