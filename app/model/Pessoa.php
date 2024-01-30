@@ -31,20 +31,35 @@ class Pessoa
     public function gravar()
     {
         try {
-            $conn = Connection::connection();
+            $pdo = Connection::connection();
 
-            $stmt = $conn->prepare('INSERT INTO pessoa (nome) VALUES (:nome)');
+            $stmt = $pdo->prepare('INSERT INTO pessoa (nome) VALUES (:nome)');
 
             $stmt->bindParam(':nome', $this->nome);
 
             $stmt->execute();
 
-            $this->id = $conn->lastInsertId();
+            $this->id = $pdo->lastInsertId();
 
             return true;
         } catch (\PDOException $e) {
             echo 'Erro: ' . $e->getMessage();
             return false;
+        }
+    }
+
+    public function ler()
+    {
+        try {
+            $pdo = Connection::connection();
+
+            $stmt = $pdo->query('SELECT * FROM pessoa');
+            $pessoas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $pessoas;
+        } catch (\PDOException $e) {
+            echo 'Erro: ' . $e->getMessage();
+            return [];
         }
     }
 }

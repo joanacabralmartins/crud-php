@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($data['pessoas'] as $pessoa_data) {
             $pessoa = new Pessoa();
             $pessoa->setNome($pessoa_data['nome']);
-            $pessoa->gravar();
 
             if ($pessoa->gravar()) {
                 if (isset($pessoa_data['filhos'])) {
@@ -33,4 +32,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         echo json_encode(['success' => false, 'error' => 'Dados inválidos']);
     }
+
+} elseif($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $pessoa = new Pessoa();
+    $pessoas_array = $pessoa->ler();
+
+    $data = [];
+
+    foreach ($pessoas_array as $pessoa) {
+        $pessoa_data = [
+            'nome' => $pessoa['nome'],
+        ];
+
+        $data['pessoas'][] = $pessoa_data;
+    }
+
+    echo json_encode($data);
 }

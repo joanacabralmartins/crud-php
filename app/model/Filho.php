@@ -60,4 +60,19 @@ class Filho
             return false;
         }
     }
+
+    public function ler()
+    {
+        try {
+            $pdo = Connection::connection();
+
+            $stmt = $pdo->query('SELECT * FROM filho');
+            $filhos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $filhos;
+        } catch (\PDOException $e) {
+            echo 'Erro: ' . $e->getMessage();
+            return [];
+        }
+    }
 }

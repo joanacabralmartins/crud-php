@@ -1,6 +1,7 @@
 let pessoas = [];
 
 const botaoIncluir = document.getElementById("btnIncluir");
+const botaoLer = document.getElementById("btnLer");
 
 function adicionarPessoa() {
     const nomeInput = document.getElementById('nome');
@@ -31,7 +32,7 @@ function atualizarTabelaPessoas() {
                 </td>
             </tr>`;
 
-        if (pessoa.filhos.length > 0) {
+        if (pessoa.filhos) {
             pessoa.filhos.forEach(filho => {
                 const filhoRow = `
                     <tr>
@@ -43,14 +44,14 @@ function atualizarTabelaPessoas() {
                 row += filhoRow;
             });
         }
-    
+        
         const adicionarFilho = `
             <tr>
                 <td colspan="2">
                     <button class="btn btn-secondary" onclick="adicionarFilho(${index})">Adicionar Filho</button>
                 </td>
             </tr>`;
-        
+
         row += adicionarFilho;
         tbody.innerHTML += row;
     });
@@ -68,6 +69,7 @@ function adicionarFilho(index) {
     const pessoaSelecionada = pessoas[index];
 
     if (nomeFilho !== '' && pessoaSelecionada) {
+        pessoaSelecionada.filhos = pessoaSelecionada.filhos || [];
         pessoaSelecionada.filhos.push(nomeFilho);
 
         atualizarTabelaPessoas();
@@ -111,6 +113,31 @@ $(document).ready(function () {
     });
 });
 
+function lerDados() {
+    $.ajax({
+        url: 'app/controller/Controller.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (result) {
+            pessoas = [];
+
+            if (result.pessoas) {
+                pessoas = result.pessoas;
+            }
+
+            atualizarTabelaPessoas();
+            atualizarDadosJSON();
+        },
+        error: function () {
+            alert('Erro ao ler os dados.');
+        }
+    });
+}
+
 botaoIncluir.addEventListener('click', () => {
     adicionarPessoa();
+})
+
+botaoLer.addEventListener('click', () => {
+    lerDados();
 })
