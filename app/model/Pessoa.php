@@ -73,7 +73,7 @@ class Pessoa
 
             return true;
         } catch (\PDOException $e) {
-            echo 'Erro' . $e->getMessage();
+            echo 'Erro: ' . $e->getMessage();
             return false;
         }
     }
